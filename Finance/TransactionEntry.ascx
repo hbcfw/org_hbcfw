@@ -38,11 +38,22 @@
                                             </ItemTemplate>
                                         </asp:Repeater>
 
-                                        <Rock:RockTextBox ID="txtCommentEntry" runat="server" Required="false" Label="Comment" />
-
                                         <Rock:ButtonDropDownList ID="btnAddAccount" runat="server" Visible="false" Label=" "
                                             DataTextField="PublicName" DataValueField="Id" OnSelectionChanged="btnAddAccount_SelectionChanged" />
 
+                                        <div class="form-group">
+                                            <label runat="server" id="lblTotalAmountLabel">Total</label>
+                                            <asp:Label ID="lblTotalAmount" runat="server" CssClass="form-control-static total-amount" />
+                                        </div>
+
+                                        <div id="divRepeatingPayments" runat="server" visible="false">
+                                            <Rock:RockLiteral ID="txtFrequency" runat="server" Label="Frequency" Visible="false" />
+                                            <Rock:ButtonDropDownList ID="btnFrequency" runat="server" Label="Frequency"
+                                                DataTextField="Value" DataValueField="Id" AutoPostBack="true" OnSelectionChanged="btnFrequency_SelectionChanged" />
+                                            <Rock:DatePicker ID="dtpStartDate" runat="server" Label="First Gift" AutoPostBack="true" AllowPastDateSelection="false" OnTextChanged="btnFrequency_SelectionChanged" />
+                                        </div>
+
+                                        <Rock:RockTextBox ID="txtCommentEntry" runat="server" Required="false" Label="Comment" />
                                         <script>
                                             /*Only show and require comment box if certain account ID is selected from the dropdown*/
                                             var commentID = '5';
@@ -75,18 +86,6 @@
                                             //hide Men's Ministry option from dropdown
                                             $('a[data-id="' + givingTuesday + '"]').hide();
                                         </script>
-
-                                        <div class="form-group">
-                                            <label runat="server" id="lblTotalAmountLabel">Total</label>
-                                            <asp:Label ID="lblTotalAmount" runat="server" CssClass="form-control-static total-amount" />
-                                        </div>
-
-                                        <div id="divRepeatingPayments" runat="server" visible="false">
-                                            <Rock:RockLiteral ID="txtFrequency" runat="server" Label="Frequency" Visible="false" />
-                                            <Rock:ButtonDropDownList ID="btnFrequency" runat="server" Label="Frequency"
-                                                DataTextField="Value" DataValueField="Id" AutoPostBack="true" OnSelectionChanged="btnFrequency_SelectionChanged" />
-                                            <Rock:DatePicker ID="dtpStartDate" runat="server" Label="First Gift" AutoPostBack="true" AllowPastDateSelection="false" OnTextChanged="btnFrequency_SelectionChanged" />
-                                        </div>
 
                                     </fieldset>
                                 </div>
@@ -169,7 +168,7 @@
 
                             <div id="divNewPayment" runat="server" class="radio-content">
 
-                                <asp:HiddenField ID="hfPaymentTab" runat="server" />
+                                <Rock:HiddenFieldWithClass ID="hfPaymentTab" CssClass="js-payment-tab" runat="server" />
                                 <asp:PlaceHolder ID="phPills" runat="server" Visible="false">
                                     <ul class="nav nav-pills">
                                         <li id="liCreditCard" runat="server"><a href='#<%=divCCPaymentInfo.ClientID%>' data-toggle="pill">Card</a></li>
@@ -180,10 +179,14 @@
                                 <div class="tab-content">
 
                                     <div id="divCCPaymentInfo" runat="server" visible="false" class="tab-pane">
-                                        <Rock:RockTextBox ID="txtCardFirstName" runat="server" Label="First Name on Card" Visible="false"></Rock:RockTextBox>
-                                        <Rock:RockTextBox ID="txtCardLastName" runat="server" Label="Last Name on Card" Visible="false"></Rock:RockTextBox>
-                                        <Rock:RockTextBox ID="txtCardName" runat="server" Label="Name on Card" Visible="false"></Rock:RockTextBox>
-                                        <Rock:RockTextBox ID="txtCreditCard" runat="server" Label="Card Number" MaxLength="19" CssClass="credit-card" />
+                                        <div class="js-creditcard-validation-notification alert alert-validation" style="display:none;">
+                                            <span class="js-notification-text"></span>
+                                        </div>
+
+                                        <Rock:RockTextBox ID="txtCardFirstName" runat="server" CssClass="js-creditcard-firstname" Label="First Name on Card" Visible="false"></Rock:RockTextBox>
+                                        <Rock:RockTextBox ID="txtCardLastName" runat="server" CssClass="js-creditcard-lastname" Label="Last Name on Card" Visible="false"></Rock:RockTextBox>
+                                        <Rock:RockTextBox ID="txtCardName" runat="server" Label="Name on Card" CssClass="js-creditcard-fullname" Visible="false"></Rock:RockTextBox>
+                                        <Rock:RockTextBox ID="txtCreditCard" runat="server" Label="Card Number"  CssClass="js-creditcard-number credit-card" MaxLength="19" />
                                         <ul class="card-logos list-unstyled">
                                             <li class="card-visa"></li>
                                             <li class="card-mastercard"></li>
@@ -192,23 +195,26 @@
                                         </ul>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <Rock:MonthYearPicker ID="mypExpiration" runat="server" Label="Expiration Date" />
+                                                <Rock:MonthYearPicker ID="mypExpiration" runat="server" Label="Expiration Date" CssClass="js-creditcard-expiration" />
                                             </div>
                                             <div class="col-md-6">
-                                                <Rock:RockTextBox ID="txtCVV" Label="Card Security Code" CssClass="input-width-xs" runat="server" MaxLength="4" />
+                                                <Rock:RockTextBox ID="txtCVV" Label="Card Security Code" CssClass="input-width-xs js-creditcard-cvv" runat="server" MaxLength="4" />
                                             </div>
                                         </div>
-                                        <Rock:RockCheckBox ID="cbBillingAddress" runat="server" Text="Enter a different billing address" CssClass="toggle-input" />
+                                        <Rock:RockCheckBox ID="cbBillingAddress" runat="server" Text="Enter a different billing address" CssClass="toggle-input js-billing-address-checkbox" />
                                         <div id="divBillingAddress" runat="server" class="toggle-content">
-                                            <Rock:AddressControl ID="acBillingAddress" runat="server" UseStateAbbreviation="true" UseCountryAbbreviation="false" />
+                                            <Rock:AddressControl ID="acBillingAddress" runat="server" UseStateAbbreviation="true" UseCountryAbbreviation="false" CssClass="js-billingaddress-control"/>
                                         </div>
                                     </div>
 
                                     <div id="divACHPaymentInfo" runat="server" visible="false" class="tab-pane">
-                                        <Rock:RockTextBox ID="txtAccountName" runat="server" Label="Name on Account" />
-                                        <Rock:RockTextBox ID="txtRoutingNumber" runat="server" Label="Routing Number" />
-                                        <Rock:RockTextBox ID="txtAccountNumber" runat="server" Label="Account Number" />
-                                        <Rock:RockRadioButtonList ID="rblAccountType" runat="server" RepeatDirection="Horizontal" Label="Account Type">
+                                        <div class="js-ach-validation-notification alert alert-validation" style="display:none;">
+                                            <span class="js-notification-text"></span>
+                                        </div>
+                                        <Rock:RockTextBox ID="txtAccountName" runat="server" Label="Name on Account" CssClass="js-ach-accountname" />
+                                        <Rock:RockTextBox ID="txtRoutingNumber" runat="server" Label="Routing Number" CssClass="js-ach-routingnumber" />
+                                        <Rock:RockTextBox ID="txtAccountNumber" runat="server" Label="Account Number" CssClass="js-ach-accountnumber"/>
+                                        <Rock:RockRadioButtonList ID="rblAccountType" runat="server" RepeatDirection="Horizontal" Label="Account Type" CssClass="js-ach-accounttype">
                                             <asp:ListItem Text="Checking" Value="checking" Selected="true" />
                                             <asp:ListItem Text="Savings" Value="savings" />
                                         </Rock:RockRadioButtonList>
@@ -239,18 +245,18 @@
                         <a id="lHistoryBackButton" runat="server" class="btn btn-link" href="javascript: window.history.back();" >Previous</a>
                         <asp:LinkButton ID="btnPaymentInfoNext" runat="server" Text="Next" CssClass="btn btn-primary pull-right" OnClick="btnPaymentInfoNext_Click" />
                         <asp:LinkButton ID="btnStep2PaymentPrev" runat="server" Text="Previous" CssClass="btn btn-link" OnClick="btnStep2PaymentPrev_Click" />
-                        <asp:Label ID="aStep2Submit" runat="server" ClientIDMode="Static" CssClass="btn btn-primary pull-right" Text="Next" />
+                        <asp:Label ID="aStep2Submit" runat="server" ClientIDMode="Static" CssClass="btn btn-primary pull-right js-step2-submit" Text="Next" />
                     </div>
                 </div>
             </div>
 
-            <iframe id="iframeStep2" src="<%=this.Step2IFrameUrl%>" style="display:none"></iframe>
+            <iframe id="iframeStep2" class="js-step2-iframe" src="<%=this.Step2IFrameUrl%>" style="display:none"></iframe>
 
-            <asp:HiddenField ID="hfStep2AutoSubmit" runat="server" Value="false" />
-            <asp:HiddenField ID="hfStep2Url" runat="server" />
-            <asp:HiddenField ID="hfStep2ReturnQueryString" runat="server" />
+            <Rock:HiddenFieldWithClass ID="hfStep2AutoSubmit" CssClass="js-step2-autosubmit" runat="server" Value="false" />
+            <Rock:HiddenFieldWithClass ID="hfStep2Url" CssClass="js-step2-url" runat="server" />
+            <Rock:HiddenFieldWithClass ID="hfStep2ReturnQueryString" CssClass="js-step2-returnquerystring" runat="server" />
             <span style="display:none" >
-                <asp:LinkButton ID="lbStep2Return" runat="server" Text="Step 2 Return" OnClick="lbStep2Return_Click" CausesValidation="false" ></asp:LinkButton>
+                <asp:LinkButton ID="lbStep2Return" CssClass="js-step2-return" runat="server" Text="Step 2 Return" OnClick="lbStep2Return_Click" CausesValidation="false" ></asp:LinkButton>
             </span>
 
         </asp:Panel>
@@ -326,9 +332,9 @@
                     <Rock:TermDescription ID="tdAddressReceipt" runat="server" Term="Address" />
                     <Rock:TermDescription runat="server" />
                     <asp:Repeater ID="rptAccountListReceipt" runat="server">
-	                    <ItemTemplate>
-		                    <Rock:TermDescription ID="tdAccountAmountReceipt" runat="server" Term='<%# Eval("PublicName") %>' Description='<%# Eval("AmountFormatted") %>' />
-	                    </ItemTemplate>
+                        <ItemTemplate>
+                            <Rock:TermDescription ID="tdAccountAmountReceipt" runat="server" Term='<%# Eval("PublicName") %>' Description='<%# Eval("AmountFormatted") %>' />
+                        </ItemTemplate>
                     </asp:Repeater>
                     <Rock:TermDescription ID="tdTotalReceipt" runat="server" Term="Total" />
                     <Rock:TermDescription runat="server" />
@@ -357,8 +363,8 @@
                                     <div class="controls">
                                         <div class="alert alert-info">
                                             <b>Note:</b> For security purposes you will need to login to use your saved account information.  To create
-	    			                    a login account please provide a user name and password below. You will be sent an email with the account
-	    			                    information above as a reminder.
+                                        a login account please provide a user name and password below. You will be sent an email with the account
+                                        information above as a reminder.
                                         </div>
                                     </div>
                                 </div>
@@ -384,6 +390,5 @@
             <Rock:NotificationBox ID="nbSuccessMessage" runat="server" Visible="false"></Rock:NotificationBox>
 
         </asp:Panel>
-
     </ContentTemplate>
 </asp:UpdatePanel>
