@@ -74,7 +74,7 @@
                                                 //future - modify the textCommentEntry to be required
                                             });
 
-                                            $(".primary-giving-block").on(click, "button.js-buttondropdown-btn-select ", function(){
+                                            $(".primary-giving-block").on("click", "button.js-buttondropdown-btn-select ", function(){
                                                 //hide Dessert Auction option from dropdown
                                                 $('a[data-id="' + dessertAuction + '"]').hide();
                                                 //hide MDO option from dropdown
