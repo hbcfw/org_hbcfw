@@ -67,7 +67,7 @@
                                             var givingTuesday = '53';
 
                                             // hide comment box by default
-                                            $(".rock-text-box").hide();
+                                            $(".primary-giving-block .rock-text-box").hide();
                                             // show comment box on click
                                             $('a[data-id="' + commentID + '"]').click(function (event) {
                                                 $(".rock-text-box").show();
