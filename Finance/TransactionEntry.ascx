@@ -73,18 +73,21 @@
                                                 $(".rock-text-box").show();
                                                 //future - modify the textCommentEntry to be required
                                             });
-                                            //hide Dessert Auction option from dropdown
-                                            $('a[data-id="' + dessertAuction + '"]').hide();
-                                            //hide MDO option from dropdown
-                                            $('a[data-id="' + mdoID + '"]').hide();
-                                            //hide Event Rental option from dropdown
-                                            $('a[data-id="' + eventRental + '"]').hide();
-                                            //hide Kenya Trip option from dropdown
-                                            $('a[data-id="' + kenyaTrip + '"]').hide();
-                                            //hide Men's Ministry option from dropdown
-                                            $('a[data-id="' + mensMinistry + '"]').hide();
-                                            //hide Men's Ministry option from dropdown
-                                            $('a[data-id="' + givingTuesday + '"]').hide();
+
+                                            $(".primary-giving-block").on(click, "button.js-buttondropdown-btn-select ", function(){
+                                                //hide Dessert Auction option from dropdown
+                                                $('a[data-id="' + dessertAuction + '"]').hide();
+                                                //hide MDO option from dropdown
+                                                $('a[data-id="' + mdoID + '"]').hide();
+                                                //hide Event Rental option from dropdown
+                                                $('a[data-id="' + eventRental + '"]').hide();
+                                                //hide Kenya Trip option from dropdown
+                                                $('a[data-id="' + kenyaTrip + '"]').hide();
+                                                //hide Men's Ministry option from dropdown
+                                                $('a[data-id="' + mensMinistry + '"]').hide();
+                                                //hide Men's Ministry option from dropdown
+                                                $('a[data-id="' + givingTuesday + '"]').hide();
+                                            } );
                                         </script>
 
                                     </fieldset>
