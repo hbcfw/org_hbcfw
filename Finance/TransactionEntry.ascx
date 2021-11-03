@@ -62,6 +62,7 @@
                                             var dessertAuction = '30';
                                             var mdoID = '36';
                                             var eventRental = '39';
+                                            var familyMinistry = '42';
                                             var kenyaTrip = '47';
                                             var mensMinistry = '49';
                                             var givingTuesday = '53';
@@ -85,8 +86,10 @@
                                                 $('a[data-id="' + kenyaTrip + '"]').hide();
                                                 //hide Men's Ministry option from dropdown
                                                 $('a[data-id="' + mensMinistry + '"]').hide();
-                                                //hide Men's Ministry option from dropdown
+                                                //hide Giving Tuesday option from dropdown
                                                 $('a[data-id="' + givingTuesday + '"]').hide();
+                                                //hide Family Ministry option from dropdown
+                                                $('a[data-id="' + familyMinistry + '"]').hide();
                                             } );
                                         </script>
 
