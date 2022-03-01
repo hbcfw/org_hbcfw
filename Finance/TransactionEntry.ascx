@@ -66,6 +66,7 @@
                                             var kenyaTrip = '47';
                                             var mensMinistry = '49';
                                             var givingTuesday = '53';
+                                            var adultMinistries = '58';
 
                                             // hide comment box by default
                                             $(".primary-giving-block .rock-text-box").hide();
@@ -90,6 +91,8 @@
                                                 $('a[data-id="' + givingTuesday + '"]').hide();
                                                 //hide Family Ministry option from dropdown
                                                 $('a[data-id="' + familyMinistry + '"]').hide();
+                                                //hide Adult Ministries option from dropdown
+                                                $('a[data-id="' + adultMinistries + '"]').hide();
                                             } );
                                         </script>
 
