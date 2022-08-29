@@ -59,16 +59,17 @@
                                             var commentID = '5';
                                             var commentBox = $('.rock-text-box .control-wrapper input[type="text"]');
 
-                                            var dessertAuction = '30';
-                                            var mdoID = '36';
-                                            var eventRental = '39';
-                                            var familyMinistry = '42';
-                                            var kenyaTrip = '47';
-                                            var mensMinistry = '49';
-                                            var givingTuesday = '53';
-                                            var adultMinistries = '58';
-                                            var regen = '61';
-                                            var youthmissionstrip = '29';
+                                            var dessertAuction      = '30';
+                                            var mdoID               = '36';
+                                            var eventRental         = '39';
+                                            var familyMinistry      = '42';
+                                            var kenyaTrip           = '47';
+                                            var mensMinistry        = '49';
+                                            var givingTuesday       = '53';
+                                            var adultMinistries     = '58';
+                                            var regen               = '61';
+                                            var youthmissionstrip   = '29';
+                                            var ahg                 = '63';
 
                                             // hide comment box by default
                                             $(".primary-giving-block .rock-text-box").hide();
@@ -99,6 +100,8 @@
                                                 $('a[data-id="' + regen + '"]').hide();
                                                 //hide Youth Missions Trip option from dropdown
                                                 $('a[data-id="' + youthmissionstrip + '"]').hide();
+                                                //hide American Heritage Girls option from dropdown
+                                                $('a[data-id="' + ahg + '"]').hide();
                                             } );
                                         </script>
 
