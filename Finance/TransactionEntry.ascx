@@ -70,6 +70,7 @@
                                             var regen               = '61';
                                             var youthmissionstrip   = '29';
                                             var ahg                 = '63';
+                                            var cambodiaTrip        = '64';
 
                                             // hide comment box by default
                                             $(".primary-giving-block .rock-text-box").hide();
@@ -102,6 +103,8 @@
                                                 $('a[data-id="' + youthmissionstrip + '"]').hide();
                                                 //hide American Heritage Girls option from dropdown
                                                 $('a[data-id="' + ahg + '"]').hide();
+                                                //hide Cambodia Trip option from dropdown
+                                                $('a[data-id="' + cambodiaTrip + '"]').hide();
                                             } );
                                         </script>
 
