@@ -132,6 +132,9 @@
                                             <Rock:RockTextBox ID="txtCommentEntry" runat="server" Required="false" Label="Comment" />
                                             
                                             <script>
+                                                // Flag to track if the comment option has been clicked
+                                                let commentClicked = false;
+
                                                 Sys.Application.add_load(function() {
                                                     // Define IDs in an organized object
                                                     const ids = {
@@ -153,13 +156,18 @@
                                                     // Reference to the comment box
                                                     const commentBox = $('.rock-text-box .control-wrapper input[type="text"]');
 
-                                                    // Hide the comment box by default
-                                                    $(".contribution-info .rock-text-box").hide();
+                                                    // Hide the comment box by default ONLY if the comment option hasn't been clicked
+                                                    if (!commentClicked) {
+                                                        $(".contribution-info .rock-text-box").hide();
+                                                    } else {
+                                                        // If the comment option was clicked before the AJAX refresh, re-add the 'required' class
+                                                        $(".contribution-info .rock-text-box").addClass('required');
+                                                    }
 
                                                     // Show the comment box when the specific ID is clicked
                                                     $('a[data-id="' + ids.comment + '"]').click(function(event) {
-                                                        $(".rock-text-box").show();
-                                                        // TODO: Modify the textCommentEntry to be required in the future
+                                                        $(".rock-text-box").show().addClass('required'); // Add the 'required' class
+                                                        commentClicked = true; // Set the flag to true
                                                     });
 
                                                     // Function to hide specific dropdown options
@@ -181,6 +189,9 @@
                                                     hideDropdownOptions();
                                                 });
                                             </script>
+
+
+
                                         </fieldset>
                                     </div>
                                 </div>
