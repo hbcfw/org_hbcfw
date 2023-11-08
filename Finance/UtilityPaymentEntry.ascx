@@ -43,11 +43,12 @@
 <script>
     // Define a variable to track if the payment section is being interacted with
     var isPaymentInteraction = false;
+    var isDatepickerInteraction = false;
 
     // Save form data to localStorage before block reloads
     function saveFormDataToLocalStorage() {
         // Save input fields data
-        $('input[type="text"], input[type="number"]').each(function () {
+        $('input[type="text"], input[type="number"], input[type="email"], textarea').each(function () {
             const inputId = $(this).attr('id');
             localStorage.setItem(inputId, $(this).val());
         });
@@ -56,7 +57,7 @@
     // Repopulate form fields from localStorage after block reloads
     function repopulateFormDataFromLocalStorage() {
         // Repopulate input fields
-        $('input[type="text"], input[type="number"]').each(function () {
+        $('input[type="text"], input[type="number"], input[type="email"], textarea').each(function () {
             const inputId = $(this).attr('id');
             const savedValue = localStorage.getItem(inputId);
             if (savedValue) {
@@ -71,43 +72,34 @@
     // Attach event listener to save form data before block reloads
     $(document).on('click', 'button, input[type="submit"]', saveFormDataToLocalStorage);
 
-
     // Clear localStorage when the "Finish" button is clicked
-    $('#<%= btnProcessTransactionFromConfirmationPage.ClientID %>').click(function () {
-        // Clear input fields data from localStorage
-        $('input[type="text"], input[type="number"]').each(function () {
-            const inputId = $(this).attr('id');
-            localStorage.removeItem(inputId);
-        });
-
-    });
-
-    Sys.Application.add_load(function () {
-        // jquery ready
-        $(document).ready(function () {
-            // Make Dropdown Submenus possible
-            $('.dropdown-submenu-toggle').on("click", function (e) {
-                e.stopPropagation();
-                e.preventDefault();
-                $(this).toggleClass('open').next('ul').toggle();
-            });
-        });
-
-        // Check if the payment section is being interacted with using the JavaScript variable
-        if (isPaymentInteraction) {
-            // Reset the variable for future interactions
-            isPaymentInteraction = false;
-        } else {
-            // Call the function to repopulate form fields
-            repopulateFormDataFromLocalStorage();
-        }
+    $(document).on('click', '#<%= btnProcessTransactionFromConfirmationPage.ClientID %>', function () {
+        localStorage.clear();
     });
 
     // Set the JavaScript variable when a saved payment account is selected
-    $('#<%= rblSavedAccount.ClientID %>').change(function() {
+    $(document).on('change', '#<%= rblSavedAccount.ClientID %>', function() {
         isPaymentInteraction = true;
     });
+
+    // Set the JavaScript variable when the datepicker field changes
+    $(document).on('change', '#<%= dtpStartDate.ClientID %>', function() {
+        isDatepickerInteraction = true;
+        // Immediately save the new date to localStorage
+        const inputId = $(this).attr('id');
+        localStorage.setItem(inputId, $(this).val());
+    });
+
+    Sys.Application.add_load(function () {
+        if (!isPaymentInteraction && !isDatepickerInteraction) {
+            repopulateFormDataFromLocalStorage();
+        }
+        // Reset the variables for future interactions
+        isPaymentInteraction = false;
+        isDatepickerInteraction = false;
+    });
 </script>
+
 
 <asp:UpdatePanel ID="upPayment" runat="server">
     <ContentTemplate>
