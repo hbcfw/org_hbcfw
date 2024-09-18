@@ -183,22 +183,8 @@
                                                 let commentClicked = false;
 
                                                 Sys.Application.add_load(function() {
-                                                    // Define IDs in an organized object
-                                                    const ids = {
-                                                        comment: '5',
-                                                        dessertAuction: '30',
-                                                        mdo: '36',
-                                                        eventRental: '39',
-                                                        familyMinistry: '42',
-                                                        kenyaTrip: '47',
-                                                        mensMinistry: '49',
-                                                        givingTuesday: '53',
-                                                        adultMinistries: '58',
-                                                        regen: '61',
-                                                        youthmissionstrip: '29',
-                                                        ahg: '63',
-                                                        cambodiaTrip: '64'
-                                                    };
+                                                    // Define IDs to show
+                                                    const visibleIds = ['5', '6', '11'];
 
                                                     // Reference to the comment box
                                                     const commentBox = $('.rock-text-box .control-wrapper input[type="text"]');
@@ -212,28 +198,29 @@
                                                     }
 
                                                     // Show the comment box when the specific ID is clicked
-                                                    $('a[data-id="' + ids.comment + '"]').click(function(event) {
+                                                    $('a[data-id="5"]').click(function(event) {
                                                         $(".rock-text-box").show().addClass('required'); // Add the 'required' class
                                                         commentClicked = true; // Set the flag to true
                                                     });
 
-                                                    // Function to hide specific dropdown options
-                                                    function hideDropdownOptions() {
-                                                        // Loop through the IDs and hide each corresponding dropdown option
-                                                        for (let key in ids) {
-                                                            if (key !== 'comment') { // Exclude the comment ID
-                                                                $('a[data-id="' + ids[key] + '"]').hide();
-                                                            }
-                                                        }
+                                                    // Function to show only specific dropdown options
+                                                    function showOnlyVisibleOptions() {
+                                                        // Hide all options first
+                                                        $('a[data-id]').hide();
+                                                        
+                                                        // Show only the specified visible IDs
+                                                        visibleIds.forEach(function(id) {
+                                                            $('a[data-id="' + id + '"]').show();
+                                                        });
                                                     }
 
-                                                    // Hide specific dropdown options on button click
+                                                    // Show only visible dropdown options on button click
                                                     $(".contribution-info").on("click", "button.js-buttondropdown-btn-select", function() {
-                                                        hideDropdownOptions();
+                                                        showOnlyVisibleOptions();
                                                     });
 
-                                                    // Call the function on page load to hide the dropdown options initially
-                                                    hideDropdownOptions();
+                                                    // Call the function on page load to show only the visible dropdown options initially
+                                                    showOnlyVisibleOptions();
                                                 });
                                             </script>
 

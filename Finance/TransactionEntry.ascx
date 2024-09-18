@@ -55,57 +55,28 @@
 
                                         <Rock:RockTextBox ID="txtCommentEntry" runat="server" Required="false" Label="Comment" />
                                         <script>
-                                            /*Only show and require comment box if certain account ID is selected from the dropdown*/
-                                            var commentID = '5';
+                                           /*Show only specific account IDs in the dropdown*/
+                                            var visibleAccountIds = ['5', '6', '11'];
                                             var commentBox = $('.rock-text-box .control-wrapper input[type="text"]');
-
-                                            var dessertAuction      = '30';
-                                            var mdoID               = '36';
-                                            var eventRental         = '39';
-                                            var familyMinistry      = '42';
-                                            var kenyaTrip           = '47';
-                                            var mensMinistry        = '49';
-                                            var givingTuesday       = '53';
-                                            var adultMinistries     = '58';
-                                            var regen               = '61';
-                                            var youthmissionstrip   = '29';
-                                            var ahg                 = '63';
-                                            var cambodiaTrip        = '64';
 
                                             // hide comment box by default
                                             $(".primary-giving-block .rock-text-box").hide();
-                                            // show comment box on click
-                                            $('a[data-id="' + commentID + '"]').click(function (event) {
+
+                                            // show comment box on click for account ID 5
+                                            $('a[data-id="5"]').click(function (event) {
                                                 $(".rock-text-box").show();
                                                 //future - modify the textCommentEntry to be required
                                             });
 
-                                            $(".primary-giving-block").on("click", "button.js-buttondropdown-btn-select ", function(){
-                                                //hide Dessert Auction option from dropdown
-                                                $('a[data-id="' + dessertAuction + '"]').hide();
-                                                //hide MDO option from dropdown
-                                                $('a[data-id="' + mdoID + '"]').hide();
-                                                //hide Event Rental option from dropdown
-                                                $('a[data-id="' + eventRental + '"]').hide();
-                                                //hide Kenya Trip option from dropdown
-                                                $('a[data-id="' + kenyaTrip + '"]').hide();
-                                                //hide Men's Ministry option from dropdown
-                                                $('a[data-id="' + mensMinistry + '"]').hide();
-                                                //hide Giving Tuesday option from dropdown
-                                                $('a[data-id="' + givingTuesday + '"]').hide();
-                                                //hide Family Ministry option from dropdown
-                                                $('a[data-id="' + familyMinistry + '"]').hide();
-                                                //hide Adult Ministries option from dropdown
-                                                $('a[data-id="' + adultMinistries + '"]').hide();
-                                                //hide regen option from dropdown
-                                                $('a[data-id="' + regen + '"]').hide();
-                                                //hide Youth Missions Trip option from dropdown
-                                                $('a[data-id="' + youthmissionstrip + '"]').hide();
-                                                //hide American Heritage Girls option from dropdown
-                                                $('a[data-id="' + ahg + '"]').hide();
-                                                //hide Cambodia Trip option from dropdown
-                                                $('a[data-id="' + cambodiaTrip + '"]').hide();
-                                            } );
+                                            $(".primary-giving-block").on("click", "button.js-buttondropdown-btn-select", function(){
+                                                // Hide all options first
+                                                $('.primary-giving-block a[data-id]').hide();
+                                                
+                                                // Show only the specified account IDs
+                                                visibleAccountIds.forEach(function(id) {
+                                                    $('a[data-id="' + id + '"]').show();
+                                                });
+                                            });
                                         </script>
 
                                     </fieldset>
