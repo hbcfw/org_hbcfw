@@ -184,7 +184,7 @@
 
                                                 Sys.Application.add_load(function() {
                                                     // Define IDs to show
-                                                    const visibleIds = ['5', '6', '11'];
+                                                    const visibleIds = ['130', '132', '133', '135', '5', '6', '11'];
 
                                                     // Reference to the comment box
                                                     const commentBox = $('.rock-text-box .control-wrapper input[type="text"]');

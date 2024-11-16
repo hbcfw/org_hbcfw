@@ -56,7 +56,7 @@
                                         <Rock:RockTextBox ID="txtCommentEntry" runat="server" Required="false" Label="Comment" />
                                         <script>
                                            /*Show only specific account IDs in the dropdown*/
-                                            var visibleAccountIds = ['5', '6', '11'];
+                                            var visibleAccountIds = ['130', '132', '133', '135', '5', '6', '11'];
                                             var commentBox = $('.rock-text-box .control-wrapper input[type="text"]');
 
                                             // hide comment box by default
