@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="UtilityPaymentEntry.ascx.cs" Inherits="RockWeb.Blocks.Finance.UtilityPaymentEntry" %>
+<%@ Control Language="C#" AutoEventWireup="true" CodeFile="UtilityPaymentEntry.ascx.cs" Inherits="RockWeb.Blocks.Finance.UtilityPaymentEntry" %>
 
 <style>    
     .dropdown-header {
@@ -39,6 +39,20 @@
         padding-left: 40px;
     }
 </style>
+
+<script>
+    Sys.Application.add_load(function () {
+        // jquery ready
+        $(document).ready(function () {
+            // Make Dropdown Submenus possible
+            $('.dropdown-submenu-toggle').on("click", function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                $(this).toggleClass('open').next('ul').toggle();
+            });
+        });
+    });
+</script>
 
 <script>
     // Define a variable to track if the payment section is being interacted with
@@ -99,7 +113,6 @@
         isDatepickerInteraction = false;
     });
 </script>
-
 
 <asp:UpdatePanel ID="upPayment" runat="server">
     <ContentTemplate>
@@ -169,22 +182,15 @@
                                                 <asp:PlaceHolder ID="phbtnAddAccount" runat="server" Visible="false" />
                                             </div>
 
-                                            <div id="divRepeatingPayments" runat="server" visible="false">
-                                                <Rock:RockLiteral ID="txtFrequency" runat="server" Label="Frequency" Visible="false" />
-                                                <Rock:ButtonDropDownList ID="btnFrequency" runat="server" Label="Frequency"
-                                                    DataTextField="Value" DataValueField="Id" AutoPostBack="true" OnSelectionChanged="btnFrequency_SelectionChanged" />
-                                                <Rock:DatePicker ID="dtpStartDate" runat="server" Label="First Gift" AutoPostBack="true" AllowPastDateSelection="false" OnTextChanged="btnFrequency_SelectionChanged" />
-                                            </div>
-                                            
                                             <Rock:RockTextBox ID="txtCommentEntry" runat="server" Required="false" Label="Comment" />
-                                            
+
                                             <script>
                                                 // Flag to track if the comment option has been clicked
                                                 let commentClicked = false;
 
                                                 Sys.Application.add_load(function() {
                                                     // Define IDs to show
-                                                    const visibleIds = ['130', '132', '133', '135', '5', '6', '11'];
+                                                    const visibleIds = ['130', '132', '133', '135', '2', '5', '6', '71'];
 
                                                     // Reference to the comment box
                                                     const commentBox = $('.rock-text-box .control-wrapper input[type="text"]');
@@ -224,8 +230,16 @@
                                                 });
                                             </script>
 
-
-
+                                            <div id="divRepeatingPayments" runat="server" visible="false">
+                                                <Rock:RockLiteral ID="txtFrequency" runat="server" Label="Frequency" Visible="false" />
+                                                <Rock:ButtonDropDownList ID="btnFrequency" runat="server" Label="Frequency"
+                                                    DataTextField="Value" DataValueField="Id" AutoPostBack="true" OnSelectionChanged="btnFrequency_SelectionChanged" />
+                                                <div class="d-flex gap-3 flex-wrap">
+                                                    <Rock:DatePicker ID="dtpStartDate" runat="server" Label="First Gift" AutoPostBack="true" AllowPastDateSelection="false" OnTextChanged="btnFrequency_SelectionChanged" />
+                                                    <Rock:DatePicker ID="dtpEndDate" runat="server" Label="End Date" AutoPostBack="true" AllowPastDateSelection="false" OnTextChanged="btnFrequency_SelectionChanged" />
+                                                </div>
+                                            </div>
+                                            
                                         </fieldset>
                                     </div>
                                 </div>
@@ -262,28 +276,51 @@
                                                     </div>
                                                 </div>
                                             </asp:PlaceHolder>
+
                                             <asp:PlaceHolder ID="phGiveAsBusiness" runat="server" Visible="false">
                                                 <asp:HiddenField ID="hfBusinessesLoaded" runat="server" />
                                                 <Rock:RockRadioButtonList ID="cblBusiness" runat="server" Label="Business" RepeatDirection="Horizontal" AutoPostBack="true" OnSelectedIndexChanged="cblBusinessOption_SelectedIndexChanged" />
                                                 <Rock:RockTextBox ID="txtBusinessName" runat="server" Label="Business Name" />
                                             </asp:PlaceHolder>
+
                                             <Rock:AddressControl ID="acAddress" runat="server" UseStateAbbreviation="true" UseCountryAbbreviation="false" Label="Address" />
-                                            <Rock:PhoneNumberBox ID="pnbPhone" runat="server" Label="Phone"></Rock:PhoneNumberBox>
-                                            <Rock:EmailBox ID="txtEmail" runat="server" Label="Email"></Rock:EmailBox>
+
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <Rock:EmailBox ID="txtEmail" runat="server" Label="Email"></Rock:EmailBox>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <Rock:PhoneNumberBox ID="pnbPhone" runat="server" Label="Phone"></Rock:PhoneNumberBox>
+                                                </div>
+                                            </div>
+                                            
+                                            <Rock:RockCheckBox ID="cbSmsOptIn" runat="server" Visible="false"/>
                                             <Rock:RockCheckBox ID="cbGiveAnonymously" runat="server" Text="Give Anonymously" />
+
                                             <asp:PlaceHolder ID="phBusinessContact" runat="server" Visible="false">
                                                 <hr />
                                                 <h4>Business Contact</h4>
+
                                                 <div class="row">
                                                     <div class="col-sm-6">
-                                                        <Rock:RockTextBox ID="txtBusinessContactFirstName" runat="server" Label="First Name" />
+                                                        <Rock:FirstNameTextBox ID="txtBusinessContactFirstName" runat="server" Label="First Name" />
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <Rock:RockTextBox ID="txtBusinessContactLastName" runat="server" Label="Last Name" />
                                                     </div>
                                                 </div>
-                                                <Rock:PhoneNumberBox ID="pnbBusinessContactPhone" runat="server" Label="Phone"></Rock:PhoneNumberBox>
-                                                <Rock:RockTextBox ID="txtBusinessContactEmail" runat="server" Label="Email"></Rock:RockTextBox>
+
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <Rock:RockTextBox ID="txtBusinessContactEmail" runat="server" Label="Email"></Rock:RockTextBox>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <Rock:PhoneNumberBox ID="pnbBusinessContactPhone" runat="server" Label="Phone"></Rock:PhoneNumberBox>
+                                                    </div>
+                                                </div>
+
+                                                <Rock:RockCheckBox ID="cbBusinessContactSmsOptIn" runat="server" Visible="false" />
+
                                             </asp:PlaceHolder>
                                         </fieldset>
                                     </div>
@@ -314,8 +351,6 @@
                                         <Rock:RockRadioButtonList ID="rblSavedAccount" runat="server" CssClass="radio-list margin-b-lg" RepeatDirection="Vertical" AutoPostBack="true" OnSelectedIndexChanged="rblSavedAccount_SelectedIndexChanged" />
 
                                          <%-- Collect Payment Info (step 2). Skip this if they using a saved giving method. --%>
-
-                                        <asp:HiddenField ID="hfIsPaymentInteraction" runat="server" Value="false" />
                                         <asp:Panel ID="pnlPaymentInfo" runat="server" Visible="true">
                                             <div class="hosted-payment-control js-hosted-payment-control">
                                                 <Rock:DynamicPlaceholder ID="phHostedPaymentControl" runat="server" />
